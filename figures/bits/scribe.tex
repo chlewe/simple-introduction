@@ -1,0 +1,52 @@
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[gate, right=1cm of src] (0) {unit};
+    \node[right=1cm of 0] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$0$} (tgt);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \node (src) {};
+    \node[subcircuit, right=1cm of src] (0) {$\text{scribe}(b)$};
+    \node[gate, right=1cm of 0] (1) {injl};
+    \node[right=3cm of 1] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$|b|$} (1);
+    \draw (1) -- node[above]{$1 + \max(|b|,o)$} (tgt);
+\end{tikzpicture}
+
+\begin{tikzpicture}
+    \node (src) {};
+    \node[subcircuit, right=1cm of src] (0) {$\text{scribe}(b)$};
+    \node[gate, right=1cm of 0] (1) {injr};
+    \node[right=3cm of 1] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$|b|$} (1);
+    \draw (1) -- node[above]{$1 + \max(m,|b|)$} (tgt);
+\end{tikzpicture}
+\end{minipage}
+%\hspace{0cm}
+\begin{minipage}{0.3\textwidth}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[crossing, right=1cm of src] (0) {};
+    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (1) {$\text{scribe}(b)$};
+    \node[subcircuit, below right=0.25cm and 0.5cm of 0] (2) {$\text{scribe}(c)$};
+    \node[pair, right=2.75cm of 0] (3) {$+$};
+    \node[right=1cm of 3] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) |- (1);
+    \draw (0) |- (2);
+    \draw (3) |- node[above]{$|b|$} (1);
+    \draw (3) |- node[below]{$|b|$} (2);
+    \draw (3) -- node[above]{$|bc|$} (tgt);
+\end{tikzpicture}
+\end{minipage}
+\end{center}

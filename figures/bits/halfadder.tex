@@ -1,0 +1,52 @@
+\begin{center}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[gate, right=1.5cm of src] (0) {cond};
+   
+    % top branch
+    %% pair
+    \node[crossing, above right=1.25cm and 0.25cm of 0] (10) {};
+    \node[gate, above right=0.25cm and 0.5cm of 10] (11) {false};
+    \node[gate, below right=0.25cm and 0.5cm of 10] (12) {iden};
+    \node[pair, right=1.75cm of 10] (13) {$+$};
+
+    \draw (10) |- (11);
+    \draw (10) |- (12);
+    \draw (13) |- node[above] (label11) {$1$} (11);
+    \draw (13) |- node[below] (label12) {$1$} (12);
+    \node[subcircuit, fit=(10) (11) (12) (13) (label11) (label12)] (1) {};
+    %% end pair
+
+    % bottom branch
+    %% pair
+    \node[crossing, below right=1.25cm and 0.25cm of 0] (20) {};
+    \node[gate, above right=0.5cm and 0.5cm of 20] (21) {iden};
+
+    %%% not
+    \node[gate, below right=0.5cm and 0.5cm of 20] (220) {iden};
+    \node[gate, right=1cm of 220] (221) {not};
+
+    \draw (220) -- node[above] (label220) {$1$} (221);
+    \node[subcircuit, fit=(220) (221) (label220)] (22) {};
+    %%% end not
+
+    \node[pair, right=3.75cm of 20] (23) {$+$};
+
+    \draw (20) |- (21);
+    \draw (20) |- (220);
+    \draw (23) |- node[above] (label21) {$1$} (21);
+    \draw (23) |- node[below] (label22) {$1$} (221);
+    \node[subcircuit, fit=(20) (21) (22) (23) (label21) (label22)] (1) {};
+    %% end pair
+
+    \node[crossing, right=5cm of 0] (3) {};
+    \node[right=1.5cm of 3] (tgt) {};
+
+    \draw (src) -- node[above]{$1+1$} (0);
+    \draw (0) |- node[above]{$1$} (10);
+    \draw (0) |- node[below]{$1$} (20);
+    \draw (3) |- (13);
+    \draw (3) |- (23);
+    \draw (3) -- node[above]{$1+1$} (tgt);
+\end{tikzpicture}
+\end{center}

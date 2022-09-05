@@ -1,0 +1,30 @@
+\documentclass[%
+    , 12pt%
+    , a4paper%
+    , titlepage%
+]{report}
+
+\input{meta/packages}
+\input{meta/commands}
+
+\tikzset{%
+    , crossing/.style={inner sep=0cm, minimum size=0cm}%
+    , gate/.style={draw}%
+    , pair/.style={draw, circle, inner sep=0cm}%
+    , subcircuit/.style={draw=gray, dashed}%
+    , >={Stealth[]}%
+}
+
+\title{WIP: Introduction to Simplicity}
+\author{Christian Lewe}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\input{chapters/motivation}
+\input{chapters/declarative}
+\input{chapters/verified}
+\input{chapters/efficient}
+
+\end{document}

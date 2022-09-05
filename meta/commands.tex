@@ -1,0 +1,270 @@
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Mathematics
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+\newcommand{\naturals} {\operatorname{\mathbb{N}}}
+\newcommand{\integers} {\operatorname{\mathbb{Z}}}
+\newcommand{\rationals}{\operatorname{\mathbb{Q}}}
+\newcommand{\reals}    {\operatorname{\mathbb{R}}}
+\newcommand{\complex}  {\operatorname{\mathbb{C}}}
+\newcommand{\group}    {\operatorname{\mathbb{G}}}
+\newcommand{\field}    {\operatorname{\mathbb{K}}}
+
+\newcommand{\predicatename}[1]{\operatorname{\mathtt{#1}}}
+\newcommand{\functionname}[1] {\operatorname{\mathsf{#1}}}
+\newcommand{\constantname}[1] {\operatorname{\mathsf{#1}}}
+\newcommand{\setname}[1]      {\operatorname{\mathbf{#1}}}
+
+\renewcommand{\vert}{\,|\,}
+\DeclareMathOperator{\divides}{\,\big|\,}
+\let\oldtextvisiblespace\textvisiblespace%
+\renewcommand{\textvisiblespace}{\text{\oldtextvisiblespace}}
+\newcommand{\concat}{\cdot}
+
+\newcommand{\orderLt} {\prec}
+\newcommand{\orderLeq}{\preceq}
+\newcommand{\orderGt} {\succ}
+\newcommand{\orderGeq}{\succeq}
+
+\newcommand{\restrict}[2]{\left.{#1}\right|_{#2}}
+\newcommand{\domain}[1]  {\functionname{dom}({#1})}
+\newcommand{\range}[1]   {\functionname{range}({#1})}
+
+\DeclareMathOperator{\ld}{ld}
+\DeclareMathOperator{\cross}{\times}
+\DeclareMathOperator{\scalar}{\bullet}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newcommand{\norm}[1]{||{#1}||}
+\newcommand{\size}[1]{\functionname{size}({#1})}
+\let\oldphi\phi
+\renewcommand{\phi}{\varphi}
+\newcommand{\definedas}{\coloneqq}
+\newcommand{\asdefined}{\eqqcolon}
+
+% set theory
+\newcommand{\union}{\cup}
+\newcommand{\intersection}{\cap}
+\newcommand{\bigUnion}{\bigcup}
+\newcommand{\bigIntersection}{\bigcap}
+
+\newcommand{\powerset}[1]{%
+    2^{#1}%
+}
+%\newcommand{\set}[1]{%
+%    \left\{%
+%        {#1}%
+%    \right\}%
+%}
+%\newcommand{\setCondition}[2]{%
+%    \left\{%
+%        {#1}%
+%    ~\middle|~%
+%        {#2}%
+%    \right\}%
+%}
+\newcommand{\tuple}[1]{%
+    \left\langle%
+        {#1}%
+    \right\rangle%
+}
+\newcommand{\cardinality}[1]{%
+    \left|%
+        {#1}%
+    \right|%
+}
+\newcommand{\ceil}[1]{%
+    \left\lceil%
+        {#1}%
+    \right\rceil%
+}
+\newcommand{\floor}[1]{%
+    \left\lfloor%
+        {#1}%
+    \right\rfloor%
+}
+\newcommand{\inverse}[1]{%
+    \overline{#1}%
+}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Logic
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+% interpretations
+\newcommand{\interA}{\mathcal{I}}
+\newcommand{\interB}{\mathcal{J}}
+\newcommand{\interC}{\mathcal{K}}
+\newcommand{\varAss}{\mathcal{Z}}
+
+% quantifiers
+\newcommand{\holds}{\,.\,}
+\newcommand{\st}{\holds}
+\newcommand{\then}{\rightarrow}
+\newcommand{\quantifier}{\mathord{\reflectbox{$\textsf{Q}$}}}
+
+% entailment
+% \models (already defined)
+\newcommand{\entails}{\Vdash}
+
+% provability
+\newcommand{\proves}{\vdash}
+\newcommand{\provesN}[1]{\vdash_{#1}}
+
+% true and false
+% \top (already defined)
+\newcommand{\bottom}{\bot}
+\newcommand{\ltrue} {\constantname{true}}
+\newcommand{\lfalse}{\constantname{false}}
+
+% logical connectives
+% \land, \lor, \lnot (already defined)
+\newcommand{\limplication}{\rightarrow}
+\newcommand{\lequivalence}{\leftrightarrow}
+% \to (already defined)
+\newcommand{\from}{\leftarrow}
+\newcommand{\lequal}{\approx}
+\newcommand{\lnequal}{\not\approx}
+\newcommand{\bigLand}{\bigwedge}
+\newcommand{\bigLor}{\bigVee}
+\newcommand{\lequiv}{\equiv}
+
+% homomorphism
+\newcommand{\isomorphic}{\cong}
+\newcommand{\homomorphic}{\preceq}
+\newcommand{\homom}{h}
+
+% term sets
+\newcommand{\constants} {\setname{Consts}}
+\newcommand{\variables} {\setname{Vars}}
+\newcommand{\functions} {\setname{Funcs}}
+\newcommand{\nulls}     {\setname{Nulls}}
+\newcommand{\terms}     {\setname{Terms}}
+% predicate names
+\newcommand{\predicates}{\setname{Preds}}
+
+% functions
+\newcommand{\arityName} {\functionname{arity}}
+\newcommand{\arity}[1]  {\arityName({#1})}
+\newcommand{\sigName}   {\functionname{sig}}
+\newcommand{\sig}[1]    {\sigName({#1})}
+\newcommand{\predsOf}[1]{\functionname{preds}({#1})}
+\newcommand{\termsOf}[1]{\functionname{terms}({#1})}
+\newcommand{\varsOf}[1] {\functionname{vars}({#1})}
+\newcommand{\consOf}[1] {\functionname{consts}({#1})}
+
+% substitutions
+\newcommand{\subA}{\sigma}
+\newcommand{\subB}{\theta}
+\newcommand{\subC}{\tau}
+\newcommand{\comp}{\circ}
+
+% formulas
+\newcommand{\forA}{\phi}
+\newcommand{\forB}{\psi}
+\newcommand{\forC}{\xi}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Description logic
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+%\newcommand{\dlSubsumed}{\sqsubseteq}
+%\newcommand{\dlEquiv}{\equiv}
+%\newcommand{\dlAnd}{\sqcap}
+%\newcommand{\dlOr}{\sqcup}
+%\newcommand{\dlNot}{\neg}
+%\newcommand{\dlUniv}[2]{\forall{#1} . {#2}}
+%\newcommand{\dlExis}[2]{\exists{#1} . {#2}}
+%\newcommand{\dlConAss}[2]{{#1} : {#2}}
+%\newcommand{\dlRolAss}[2]{\left({#1}\right) : {#2}}
+%
+%\newcommand{\ALC}{\mathcal{ALC}}
+%\newcommand{\dlABox}{\mathcal{A}}
+%\newcommand{\dlTBox}{\mathcal{T}}
+%\newcommand{\dlKB}{\mathcal{K}}
+%
+%\newcommand{\dlConA}{A}
+%\newcommand{\dlConB}{B}
+%\newcommand{\dlConC}{C}
+%\newcommand{\dlRolA}{R}
+%\newcommand{\dlRolB}{S}
+%\newcommand{\dlRolC}{T}
+%\newcommand{\dlIndA}{a}
+%\newcommand{\dlIndB}{b}
+%\newcommand{\dlIndC}{c}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Complexity theory
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+\newcommand{\encoding}[1]{%
+    \functionname{enc}\left(%
+    {#1}
+    \right)%
+}
+\newcommand{\bigO}[1]{\operatorname{\mathcal{O}}({#1})}
+
+% asymptotically bounded
+\newcommand{\DTime}[1] {\operatorname{\textsc{DTime}}({#1})}
+\newcommand{\NTime}[1] {\operatorname{\textsc{NTime}}({#1})}
+\newcommand{\DSpace}[1]{\operatorname{\textsc{DSpace}}({#1})}
+\newcommand{\NSpace}[1]{\operatorname{\textsc{NSpace}}({#1})}
+% logarithmic hierarchy
+\newcommand{\ACZero}{\operatorname{\textsc{AC}}^0}
+\newcommand{\LSpace}{\operatorname{\textsc{L}}}
+\newcommand{\coL}   {\operatorname{\textsc{coL}}}
+\newcommand{\NL}    {\operatorname{\textsc{NL}}}
+\newcommand{\coNL}  {\operatorname{\textsc{coNL}}}
+\newcommand{\NCn}[1]{\operatorname{\textsc{NC}}^{#1}}
+\newcommand{\ACn}[1]{\operatorname{\textsc{AC}}^{#1}}
+% polynomial time
+\newcommand{\PTime}{\operatorname{\textsc{PTime}}}
+\newcommand{\coP}  {\operatorname{\textsc{coP}}}
+\newcommand{\NP}   {\operatorname{\textsc{NP}}}
+\newcommand{\coNP} {\operatorname{\textsc{coNP}}}
+% polynomial hierarchy
+\newcommand{\hyperNP}[1]  {\operatorname{\mathrm{\Sigma}}^{\operatorname{p}}_{#1}}
+\newcommand{\hyperCoNP}[1]{\operatorname{\mathrm{\Pi}}^{\operatorname{p}}_{#1}}
+\newcommand{\hyperP}[1]   {\operatorname{\mathrm{\Delta}}^{\operatorname{p}}_{#1}}
+% polynomial space
+\newcommand{\PSpace}   {\operatorname{\textsc{PSpace}}}
+\newcommand{\coPSpace} {\operatorname{\textsc{coPSpace}}}
+\newcommand{\NPSpace}  {\operatorname{\textsc{NPSpace}}}
+\newcommand{\coNPSpace}{\operatorname{\textsc{coNPSpace}}}
+% exponential hierarchy
+\newcommand{\ExpTime}      {\operatorname{\textsc{ExpTime}}}
+\newcommand{\ExpSpace}     {\operatorname{\textsc{ExpSpace}}}
+\newcommand{\NExpTime}     {\operatorname{\textsc{NExpTime}}}
+\newcommand{\NExpSpace}    {\operatorname{\textsc{NExpSpace}}}
+\newcommand{\nExpTime}[1]  {{#1}\ExpTime}
+\newcommand{\nExpSpace}[1] {{#1}\ExpSpace}
+\newcommand{\nNExpTime}[1] {{#1}\NExpTime}
+\newcommand{\nNExpSpace}[1]{{#1}\NExpSpace}
+% decidability border
+\newcommand{\Elementary}{\operatorname{\textsc{Elemantary}}}
+\newcommand{\Recursive} {\operatorname{\textsc{R}}}
+\newcommand{\RE}        {\operatorname{\textsc{RE}}}
+\newcommand{\coRE}      {\operatorname{\textsc{coRE}}}
+% arithmetical hierarchy
+\newcommand{\hyperSemidecidable}[1]  {\operatorname{\mathrm{\Sigma}}^0_{#1}}
+\newcommand{\hyperCoSemidecidable}[1]{\operatorname{\mathrm{\Pi}}^0_{#1}}
+\newcommand{\hyperDecidable}[1]      {\operatorname{\mathrm{\Delta}}^0_{#1}}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+% Paper-specific
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+%\newcommand{\simScribe}{\functionname{scribe}}
+%\newcommand{\simUnit}{\functionname{unit}}
+%\newcommand{\simIden}{\functionname{iden}}
+%\newcommand{\simComp}{\functionname{comp}}
+%\newcommand{\simPair}{\functionname{pair}}
+%\newcommand{\simTake}{\functionname{take}}
+%\newcommand{\simDrop}{\functionname{drop}}
+%\newcommand{\simInjL}{\functionname{injl}}
+%\newcommand{\simInjR}{\functionname{injr}}
+%\newcommand{\simCase}{\functionname{case}}
+%\newcommand{\simWitness}{\functionname{witness}}
+%\newcommand{\simFail}{\functionname{fail}}
+%\newcommand{\simAssertL}{\functionname{assertl}}
+%\newcommand{\simAssertR}{\functionname{assertr}}

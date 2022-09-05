@@ -1,0 +1,37 @@
+\chapter{Efficient Circuits}
+
+% execution on bit machine
+% optimisations
+% Minimize bandwidth and storage requirements by allowing sharing of expressions and pruning of unused expressions.
+
+\section{Merkle Root}
+
+\subsection{Identity Merkle Root}
+
+The identity Merkle root (IMR) uniquely identifies a program at redemption time.
+It is the counterpart of the CMR and is defined just as the latter,
+with one important exception:
+The IMR depends on the bitstring contained in witness combinators.
+%
+\begin{align*}
+    \text{CMR}(\text{witness}\ a) &\definedas \text{tag}(\text{witness}) \\
+    \text{IMR}(\text{witness}\ a) &\definedas \text{SHA256}_\text{Block}(\text{tag}(\text{witness}), a || \text{len}(a) || 0\ldots0)
+\end{align*}
+%
+The CMR of a witness combinator is simply its tag,
+independent of the bitstring.
+Meanwhile,
+the IMR of a witness combinator is computed as SHA256 of bistring $a$ with the tag as initial value.
+\emph{(This computation is a simplification, because we deal with bitstrings.
+In reality, Simplicity works in terms of Simplicity values. See Chapter~\ref{ch:verifiable} for more details.)}
+As a consequence,
+changing the witness changes the IMR.
+
+\subsection{Sharing}
+
+% compress program as much as possible
+% there are no two parts that compute the same (roughly speaking)
+% an attacker cannot change the program size while keeping the CMR the same (more precise)
+% Merkle root of combinator identifies its computation
+% witness combinators with different bitstrings compute different functions, so we must use IMR
+% maximal sharing: there are no two combinators in the program that have the same IMR, input and output type

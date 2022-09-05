@@ -1,0 +1,136 @@
+\chapter{Motivation}%
+\label{ch:motivation}
+
+Simplicity is a language by Russell O'Connor that has been in development since 2015.
+It can be used to express spending conditions that lock coins (UTXOs) on a blockchain,
+such as (multi)signatures,
+hash- and timelocks,
+covenants and much more.
+It may be used as a replacement of Bitcoin Script in the future.
+% TODO: reword
+In this document,
+we give an overview of Simplicity,
+starting with the design goals behind it.
+
+\section{Declarative}
+
+% It is important to keep the naming consistent:
+% Bitcoin Script has "scripts"
+% Miniscript has "policies"
+% Simplicity has "programs"
+
+Expressing spending conditions in Bitcoin Script \emph{(here, we refer to this expression as \enquote{script})}
+can be difficult without introducing errors.
+In response,
+Miniscript was developed as a language for expressing spending conditions in declarative spending policies
+that let users focus on who can spend what.
+On the blockchain,
+the policy is converted into an equivalent script,
+hiding the underlying implementation details of Bitcoin Script from the user.
+Therefore,
+Miniscript can be seen as a subset of Bitcoin Script with a human-friendly interface for expressing spending conditions.
+%
+Arguably,
+this is a more natural approach.
+It prevents bugs by making scripts more human-readable
+and by making the semantics of a script---%
+i.e., the conditions that it expresses---%
+more explicit.
+We can statically check properties such as
+correctness \emph{(whether the resulting script can be redeemed on the blockchain without violating consensus rules)},
+malleability \emph{(whether the script can be redeemed with a witness that does not satisfy all spending conditions)}
+and fees \emph{(how large the resulting script plus witness is and how expensive this size is at the current rate)}.
+%
+Simplicity goes one step further: Simplicity is a declarative \emph{runtime} environment:
+We remove the restriction of a stack,
+inherent to Bitcoin Script,
+and instead evaluate pure mathematical functions.
+Spending conditions are expressed in \emph{programs} that are themselves functions,
+built by combining a range of base functions as fundamental building blocks.
+The Simplicity Bit Machine then executes these programs for us,
+hiding the implementation details from the user.
+As a result,
+we get all the benefits of Miniscript and much more,
+as we will see in the following sections.
+
+% Idea: what a script expresses (i.e., a pure function over spending scenarios)
+% and what a script _is_ (a DAG that is very close to a function) become one in Simplicity
+
+\section{Verifiable}
+
+The blockchain is irreversible,
+so we want to absolutely make sure that our coins are locked correctly before we put them on there.
+Simplicity is mathematically defined,
+which means that the spending conditions expressed in a Simplicity program are clearly defined.
+They are independent of any specific implementation in any given programming language.
+We can use logical reasoners and theorem provers---%
+such as the \href{https://coq.inria.fr/}{Coq proof assistant}---%
+to prove,
+for instance,
+that a signature matching a given public key is the only valid witness for a program
+and that any other witness is invalid.
+We can also prove how many resources a program will use on the Bit Machine,
+which implies fees.
+Tasks like these are already hard to do for Miniscript and the underlying Bitcoin Script,
+but Simplicity allows us to prove \emph{any} mathematical property of a given program.
+If a property holds for a program,
+then we can prove it.
+The use of a verifiable language on the blockchain opens up entirely new possibilities for formal verification:
+We can essentially \emph{prove} that our programs have no bugs.
+By proving the security properties first,
+we can avoid catastrophes like the Parity bug or DAO hack on Ethereum,
+which were both caused by faulty scripts.
+%
+\enquote{Don't trust. Verify.}
+Blockstream's company motto is stronger than ever in Simplicity.
+
+\section{Expressive}
+
+We want to be able to express as many spending conditions as possible.
+Miniscript can only express what Bitcoin Script can express,
+and Bitcoin Script cannot express everything,
+so it is regularly extended with new op codes.
+Simplicity can express \emph{every} clearly defined---%
+i.e., decidable---%
+spending condition out of the box.
+This enables schemes like covenants, weighted thresholds and oracles,
+and novel cryptography like zero-knowledge proofs and identity-based encryption.
+The possible use cases that could build on this foundation are endless.
+%
+With great power comes great responsibility,
+and with powerful scripts comes the risk of rogue scripts.
+Simplicity provides all of its expressivity while being verifiable.
+We can do great things, but we can also prove that we made no mistakes.
+Figuratively speaking,
+we tame the expressivity beast with the restraints of formal proof.
+%
+Also,
+Simplicity is \emph{not} Turing complete,
+which means that programs never run into infinite loops.
+They finish after a short while,
+whose duration we can computationally predict beforehand.
+
+\section{Efficient}
+
+It should be as fast as possible to evaluate
+if a given witness satisfies the spending conditions of a given expression.
+Simplicity's introspection is limited to the current transaction,
+which means that programs can be evaluated on Bitcoin full nodes without the need for new index structures.
+%
+The program size is minimized for storage on the blockchain and for transmission:
+Parts of a program that do the same computation are collapsed into one \emph{(called sharing)}.
+Furthermore,
+branches of a program that are not visited by a given witness are removed \emph{(called pruning)}.
+The latter is similar to how Taproot hides unused scripts,
+but Simplicity also hides unused branches in a \emph{used} program.
+%
+Expensive operations---%
+such as signature checks---%
+are implemented as \emph{jets}:
+Special program expressions that call verified C code during their evaluation.
+%
+Finally,
+being able to predict the resource usage of a program on the Bit Machine
+enables runtime optimizations.
+
+% TODO: summary of each chapter

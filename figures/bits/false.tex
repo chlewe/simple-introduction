@@ -1,0 +1,20 @@
+\begin{center}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[gate, right=1cm of src] (0) {unit};
+    \node[gate, right=1cm of 0] (1) {injl};
+    \node[right=3cm of 1] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$0$} (1);
+    \draw (1) -- node[above]{$1 + \max(0,0)$} (tgt);
+\end{tikzpicture}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[gate, right=1cm of src] (0) {false};
+    \node[right=1cm of 0] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$1$} (tgt);
+\end{tikzpicture}
+\end{center}

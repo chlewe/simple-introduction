@@ -1,0 +1,49 @@
+\begin{center}
+\begin{tikzpicture}
+    \node (src) {};
+
+    % left pair
+    \node[crossing, right=1cm of src] (10) {};
+    \node[subcircuit, above right=0.25cm and 0.5cm of 10] (11) {$s$};
+    \node[gate, below right=0.25cm and 0.5cm of 10] (12) {iden};
+    \node[pair, right=1.75cm of 10] (13) {$+$};
+
+    \draw (10) |- (11);
+    \draw (10) |- (12);
+    \draw (13) |- node[above] (label11) {$1$} (11);
+    \draw (13) |- node[below] (label12) {$n$} (12);
+    \node[subcircuit, fit=(10) (11) (12) (13) (label11) (label12)] (1) {};
+
+    % right cond
+    \node[gate, right=1.5cm of 13] (20) {cond};
+    \node[subcircuit, above right=0.25cm and 0.25cm of 20] (21) {$t$};
+    \node[gate, below right=0.25cm and 0.25cm of 20] (22) {true};
+    \node[crossing, right=1.75cm of 20] (23) {};
+
+    \draw (20) |- node[above] (label21) {$n$} (21);
+    \draw (20) |- node[below] (label22) {$n$} (22);
+    \draw (23) |- (21);
+    \draw (23) |- (22);
+    \node[subcircuit, fit=(20) (21) (22) (23) (label21) (label22)] (1) {};
+
+    \node[right=1cm of 23] (tgt) {};
+    \draw (src) -- node[above]{$n$} (10);
+    \draw (13)  -- node[above]{$1+n$} (20);
+    \draw (23)  -- node[above]{$1$} (tgt);
+\end{tikzpicture}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[crossing, right=1cm of src] (0) {};
+    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (1) {$s$};
+    \node[subcircuit, below right=0.25cm and 0.5cm of 0] (2) {$t$};
+    \node[gate, right=1.25cm of 0] (3) {or};
+    \node[right=1cm of 3] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) |- (1);
+    \draw (0) |- (2);
+    \draw (3) |- node[above]{$1$} (1);
+    \draw (3) |- node[below]{$1$} (2);
+    \draw (3) -- node[above]{$1$} (tgt);
+\end{tikzpicture}
+\end{center}
