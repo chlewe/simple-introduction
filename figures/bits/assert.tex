@@ -1,0 +1,48 @@
+\begin{center}
+\begin{tikzpicture}
+    \node (src) {};
+
+    % pair (t unit) -- cond true false
+    % pair (t unit)
+    \node[crossing, right=1cm of src] (0) {};
+    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (00) {$t$};
+    \node[gate, below right=0.25cm and 0.5cm of 0] (01) {unit};
+    \node[pair, right=1.75cm of 0] (1) {$+$};
+
+    \draw (0) |- (00);
+    \draw (0) |- (01);
+    \draw (1) |- node[above] (label1a) {$1$} (00);
+    \draw (1) |- node[below] (label1b) {$0$} (01);
+    \node[subcircuit, fit=(0) (00) (01) (1) (label1a) (label1b)] (0-1) {};
+    % end pair
+
+    % assertr _ unit
+    \node[gate, right=1.75cm of 1] (2) {assertr};
+    \node[above right=0.25cm and 0.25cm of 2] (20) {\Lightning};
+    \node[gate, below right=0.25cm and 0.25cm of 2] (21) {unit};
+    \node[crossing, right=1.75cm of 2] (3) {};
+
+    \draw (1)  -- node[above]{$\substack{1+\\\max(0,0)\\+0}$} (2);
+    \draw (2) |- node[above] (label20) {$0+0$} (20);
+    \draw (2) |- node[below] (label21) {$0+0$} (21);
+    % \draw (3) |- (20);
+    \draw (3) |- (21);
+    \node[subcircuit, fit=(2) (20) (21) (3) (label20) (label21)] (2-3) {};
+    % end cond
+
+    \node[right=1cm of 3] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (3)  -- node[above]{$0$} (tgt);
+\end{tikzpicture}
+\begin{tikzpicture}
+    \node (src) {};
+    \node[subcircuit, right=1cm of src] (0) {$t$};
+    \node[gate, right=1cm of 0] (1) {assert};
+    \node[right=1cm of 1] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$1$} (1);
+    \draw (1) -- node[above]{$0$} (tgt);
+\end{tikzpicture}
+\end{center}

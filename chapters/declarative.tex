@@ -241,7 +241,8 @@ whose output becomes the overall output.
 %
 In programming, this is also called \emph{chaining} or \emph{piping}.
 
-\subsection{Case}
+\subsection{Case}%
+\label{ssec:case}
 
 \input{figures/bits/case}
 %
@@ -550,15 +551,103 @@ To summarise,
 \section{Assertions and Failure}%
 \label{sec:asserts}
 
+Programs might fail during execution.
+This has two use cases:
+First,
+validating spending conditions involves a sequence of Boolean checks:
+\emph{Does the signature match the public key?
+Does the preimage hash to the image?
+Is the current block height less or equal to the locktime?}
+By making the entire program fail if one of its checks fails,
+we can do each check once and then forget about it.
+We do not need to keep track Boolean outputs.
+With this approach,
+it is possible to write programs that read zero bits,
+validate through hard-coded \emph{(scribe)} and variable constants \emph{(witness)},
+and write zero bits as a result.
+The number of Boolean checks inside the program does not influence its output type.
+
+Second,
+a given witness determines exactly which branches of the program will be explored during execution.
+We can compress the program by removing all unused branches.
+This is called \emph{pruning} and saves valuable space on the blockchain.
+
 \subsection{Left Assertion}
 
 \input{figures/bits/assertl}
+%
+The left assertion combinator takes one argument---%
+circuit $s$ that reads $n + o$ bits and writes $p$ bits---%
+branches to it if the input tag bit is false
+and fails otherwise.
+The combinator is exactly like \enquote{case} (see Subsection~\ref{ssec:case}),
+but with a failure branch on the bottom.
+%
+Length $m$ of the right type of the union depends on the surrounding circuit.
+%
+The CMR of \enquote{assertl} is defined as the CMR of \enquote{case},
+where circuit $t$ is a free variable.
+For each left assertion,
+we must choose such a $t$ to set the CMR.
 
 \subsection{Right Assertion}
 
 \input{figures/bits/assertr}
+%
+The right assertion combinator takes one argument---%
+circuit $t$ that reads $m + o$ bits and writes $p$ bits---%
+branches to it if the input tag bit is true
+and fails otherwise.
+The combinator is exactly like \enquote{case} (see Subsection~\ref{ssec:case}),
+but with a failure branch on the top.
+%
+Length $n$ of the left type of the union depends on the surrounding circuit.
+%
+The CMR of \enquote{assertr} is defined as the CMR of \enquote{case},
+where circuit $s$ is a free variable.
+For each right assertion,
+we must choose such a $s$ to set the CMR.
+
+\subsection{Assertion}
+
+\input{figures/bits/assert}
+%
+We can turn a Boolean check into an assertion by using the assertion circuit \emph{(see left)}.
+It takes a circuit $t$ that reads $n$ bits and writes $1$ bit,
+writes 0 bits if this bit was \enquote{true} and fails otherwise.
+%
+First,
+a pair joins the output of $t$ with zero bits.
+Second,
+an assertion evaluates the first bit,
+fails on \enquote{false}
+and passes the remaining zero bits to the bottom branch on \enquote{true}.
+Finally,
+the unit combinator writes zero bits as output.
+%
+As a shorthand,
+we can write the \enquote{assert} circuit as a gate \emph{(see right)}.
 
 \subsection{Pruning}
+
+We can compress a program by pruning all branches that are not explored during execution for a given witness.
+Note that this works only for programs that take no input.
+Also note that the output of this compression depends on the witness.
+First,
+we execute the program and observe which branches are explored.
+Next,
+we replace case combinators
+(1) with left assertions if the right branch was unused, and
+(2) with right assertions if the left branch was unused.
+
+Because \enquote{assertl} and \enquote{assertr} have exactly the same parameters as \enquote{case},
+the numbers $n$, $m$, $o$ and $p$ remain the same.
+Because the CMR of \enquote{assertl} and \enquote{assertr} is the same as for \enquote{case}
+\emph{(if we keep the same $s$ and $t$)}, the CMR of the overall program remains the same.
+The UTXO writer can commit to an unpruned program,
+the UTXO redeemer prunes it according to her witness
+and both programs will be equal according to their CMR.
+This is how we compress programs at redemption time while keeping equality to the original program commitment.
 
 %\subsection{Universal Fail}
 %
