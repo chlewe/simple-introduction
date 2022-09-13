@@ -2,16 +2,16 @@
 \begin{tikzpicture}
     \node (src) {};
     \node[crossing, right=1cm of src] (0) {};
-    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (1) {$s$};
-    \node[subcircuit, below right=0.25cm and 0.5cm of 0] (2) {$t$};
-    \node[pair, right=1.25cm of 0] (3) {$+$};
-    \node[right=1cm of 3] (tgt) {};
+    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (00) {$s$};
+    \node[subcircuit, below right=0.25cm and 0.5cm of 0] (01) {$t$};
+    \node[pair, right=1.25cm of 0] (1) {$+$};
+    \node[right=1cm of 1] (tgt) {};
 
     \draw (src) -- node[above]{$n$} (0);
-    \draw (0) |- (1);
-    \draw (0) |- (2);
-    \draw (3) |- node[above]{$m$} (1);
-    \draw (3) |- node[below]{$o$} (2);
-    \draw (3) -- node[above]{$m+o$} (tgt);
+    \draw (0) |- (00);
+    \draw (0) |- (01);
+    \draw (1) |- node[above]{$m$} (00);
+    \draw (1) |- node[below]{$o$} (01);
+    \draw (1) -- node[above]{$m+o$} (tgt);
 \end{tikzpicture}
 \end{center}

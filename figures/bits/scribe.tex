@@ -36,17 +36,17 @@
 \begin{tikzpicture}
     \node (src) {};
     \node[crossing, right=1cm of src] (0) {};
-    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (1) {$\text{scribe}(b)$};
-    \node[subcircuit, below right=0.25cm and 0.5cm of 0] (2) {$\text{scribe}(c)$};
-    \node[pair, right=2.75cm of 0] (3) {$+$};
-    \node[right=1cm of 3] (tgt) {};
+    \node[subcircuit, above right=0.25cm and 0.5cm of 0] (00) {$\text{scribe}(b)$};
+    \node[subcircuit, below right=0.25cm and 0.5cm of 0] (01) {$\text{scribe}(c)$};
+    \node[pair, right=2.75cm of 0] (1) {$+$};
+    \node[right=1cm of 1] (tgt) {};
 
     \draw (src) -- node[above]{$n$} (0);
-    \draw (0) |- (1);
-    \draw (0) |- (2);
-    \draw (3) |- node[above]{$|b|$} (1);
-    \draw (3) |- node[below]{$|b|$} (2);
-    \draw (3) -- node[above]{$|bc|$} (tgt);
+    \draw (0) |- (00);
+    \draw (0) |- (01);
+    \draw (1) |- node[above]{$|b|$} (00);
+    \draw (1) |- node[below]{$|b|$} (01);
+    \draw (1) -- node[above]{$|bc|$} (tgt);
 \end{tikzpicture}
 \end{minipage}
 \end{center}

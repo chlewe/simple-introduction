@@ -1,17 +1,22 @@
 \begin{center}
 \begin{tikzpicture}
     \node (src) {};
+
+    % assertr _ t
     \node[gate, right=3.5cm of src] (0) {assertr};
-    \node[above right=0.25cm and 0.25cm of 0] (1) {\Lightning};
-    \node[subcircuit, below right=0.25cm and 0.25cm of 0] (2) {$t$};
-    \node[crossing, right=1.25cm of 0] (3) {};
-    \node[right=1cm of 3] (tgt) {};
+    \node[above right=0.25cm and 0.25cm of 0] (00) {\Lightning};
+    \node[subcircuit, below right=0.25cm and 0.25cm of 0] (01) {$t$};
+    \node[crossing, right=1.25cm of 0] (1) {};
+
+    \draw (0) |- node[above]{$n+o$} (00);
+    \draw (0) |- node[below]{$m+o$} (01);
+    % \draw (1) |- (00);
+    \draw (1) |- (01);
+    % end assertr
+
+    \node[right=1cm of 1] (tgt) {};
 
     \draw (src) -- node[above]{$1+\max(n,m)+o$} (0);
-    \draw (0) |- node[above]{$n+o$} (1);
-    \draw (0) |- node[below]{$m+o$} (2);
-    % \draw (3) |- (1);
-    \draw (3) |- (2);
-    \draw (3) -- node[above]{$p$} (tgt);
+    \draw (1) -- node[above]{$p$} (tgt);
 \end{tikzpicture}
 \end{center}
