@@ -658,9 +658,61 @@ This is how we compress programs at redemption time while keeping equality to th
 \section{Jets}%
 \label{sec:jets}
 
-% run verified C code
-% macros
-% encapsulated primitives
+Simplicity can verify any function,
+but because of the generic nature of its combinators,
+useful programs are typically large in size.
+SHA256 hashing involves many steps,
+so does Schnorr signature checking,
+etc.
+Meanwhile,
+evaluating Simplicity circuits is not as fast as evaluating a program written in C.
+The latter works like a computer works and enjoys hardware acceleration,
+so it is naturally magnitudes faster.
+Blocks must be verified quickly,
+so we must speed up circuit evaluation.
+Block space is also valuable,
+so circuits must be as small as possible.
+
+\input{figures/bits/jet}
+%
+We solve the problems of speed and size by using \emph{jets}:
+combinators that are associated with a given C program that behaves exactly as some Simplicity circuit.
+Whenever we want to use a circuit that is rather large and expensive \emph{(see left)},
+we instead use its jet \emph{(see right)}.
+The jet is evaluated by calling the C code,
+so the computed function remains the same,
+including the input and output type as well as the computation result.
+A catalogue includes jets for a range of computations,
+such as arithmetic, hashing and secp256k1 cryptography,
+which we constantly work on expanding.
+
+Jets are a single gate,
+so they are much smaller than the circuit that they replace.
+This solves the problem of block space and fees.
+%
+Meanwhile,
+jets use C code that behaves exactly as the circuit that it replaces.
+Simplicity is mathematically defined,
+so we can write a specification of the input a program takes (pre condition)
+and of the output it produces (post condition).
+The C code is written in \href{https://vst.cs.princeton.edu/}{Verifiable C},
+so we can prove mathematical properties about it that also hold for the resulting assembly.
+We use the Coq proof assistant to show that the C code produces the same output (post condition) upon a given input (pre condition).
+This solves the problems of speed and correctness.
+
+In the future,
+programs will consist almost exclusively of jets.
+Simplicity circuits will almost become a theoretical construct,
+while the real computation happens in verified C code.
+However,
+the real picture is more nuanced than that.
+We design jets to solve cryptographic primitives,
+functions that can be combined to form protocols and locking schemes,
+so more than one jet is required to express a useful spending condition.
+Jets also cannot contain witness data,
+so witness combinators are required.
+Jets will do the heavy cryptographic lifting while the remaining circuit combines this cryptography in interesting ways,
+like conjunctions, disjunction and thresholds.
 
 \section{Computational Environment}%
 \label{sec:environment}
