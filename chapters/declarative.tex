@@ -519,7 +519,8 @@ but the individual witness that will be used in the future is unknown.
 We must be able to add witness data to a program without changing its CMR.
 A special combinator is needed, namely the \emph{witness} combinator.
 
-\subsection{Witness}
+\subsection{Witness}%
+\label{ssec:witness}
 
 \input{figures/bits/witness}
 %
@@ -717,7 +718,58 @@ like conjunctions, disjunction and thresholds.
 \section{Computational Environment}%
 \label{sec:environment}
 
-% primitive (always part of jet)
+\input{figures/bits/environment}
+%
+Simplicity circuits evaluate a function upon an input.
+This input comes from four sources:
+(1) the input to the circuit itself \emph{(see $n$ bits)},
+(2) constants hard-coded inside the circuit \emph{(see Subsection~\ref{ssec:scribe})},
+(3) constants provided as witness data \emph{(see Subsection~\ref{ssec:witness})} and
+(4) constants read from the computational environment \emph{(see gray dots)}.
+%
+A circuit is evaluated from left to right:
+Values are passed into it and passed out of it.
+As we go through the circuit,
+some parts produce hard-coded constants.
+Further data comes from outside the circuit: witness and environment data.
+This data lives outside and creates a context in which a circuit is evaluated.
+For the same input,
+the circuit may produce a different output in different contexts.
+Only if the input and context are the same,
+then the output is guaranteed to also be the same.
+
+Both the witness and the environment are variable,
+but the latter has nothing to do with program commitments.
+Neither the UTXO writer \emph{(at commitment time)}
+nor the UTXO redeemer \emph{(at redemption time)} has any influence over it.
+%
+The environment commonly contains the current transaction,
+but it can contain any data in principle,
+as long as it is fixed and agreed-upon by all participants of the blockchain.
+
+Constants are read from the environment by using \emph{primitives}:
+combinators that are associated with a parameter of the environment and return its value.
+Primitives are a window into the environment.
+They read zero bits and write their value in as many bits as necessary.
+For this to work,
+the kinds of parameters that exist in the environment must be known when writing a program.
+We define Simplicity \emph{applications} and their type of environment.
+A Simplicity program written \emph{for a given application} is always evaluated in an environment of the same type.
+For each parameter,
+there is a primitive that returns its value.
+Naturally,
+the available primitives differ for each application.
+Prominent Simplicity applications include \emph{Core}, which has an empty environment;
+\emph{Bitcoin}, which has a Bitcoin transaction environment; and
+\emph{Elements}, which has an \href{https://elementsproject.org/}{Elements} transaction environment.
+
+For technical reasons,
+we treat primitives as jets.
+Both are evaluated by calling C code:
+one to read from the environment and the other to execute the jet.
+Both have a known input and output type.
+The difference is that primitives read from the environment,
+while (genuine) jets compute the same result as their associated circuit.
 
 % \section{Blockchain Application}
 % schnorr example

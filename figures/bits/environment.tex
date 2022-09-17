@@ -1,0 +1,33 @@
+\begin{center}
+\begin{tikzpicture}
+    \node (src) {};
+
+    \node[gate, right=2cm of src, inner xsep=1cm, inner ysep=0.5cm] (0) {circuit};
+
+    \node[above left=-0.3cm and -0.7cm of 0] (00anchor) {};
+    \node[above=-0.3cm of 0] (01anchor) {};
+    \node[above right=-0.3cm and -0.7cm of 0] (02anchor) {};
+    \node[below left=-0.3cm and -1.3cm of 0] (03anchor) {};
+    \node[below right=-0.3cm and -1.3cm of 0] (04anchor) {};
+
+    \node[envvar, above=0.8cm of 00anchor] (00) {};
+    \node[envvar, above=1.2cm of 01anchor] (01) {};
+    \node[envvar, above=0.4cm of 02anchor] (02) {};
+    \node[envvar, below=1.2cm of 03anchor] (03) {};
+    \node[envvar, below=0.4cm of 04anchor] (04) {};
+    \node[text=gray, above right=1cm and -1.2cm of 0] (env) {environment};
+    \node[text=gray, above left=1cm and -1.2cm of 0] (phantomenv) {\phantom{environment}};
+
+    \draw[draw=gray] (00anchor) -- (00) {};
+    \draw[draw=gray] (01anchor) -- (01) {};
+    \draw[draw=gray] (02anchor) -- (02) {};
+    \draw[draw=gray] (03anchor) -- (03) {};
+    \draw[draw=gray] (04anchor) -- (04) {};
+    \node[subcircuit, fit=(0) (00) (01) (02) (03) (04) (env) (phantomenv)] {};
+
+    \node[right=2cm of 0] (tgt) {};
+
+    \draw (src) -- node[above]{$n$} (0);
+    \draw (0) -- node[above]{$m$} (tgt);
+\end{tikzpicture}
+\end{center}
